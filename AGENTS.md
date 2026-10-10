@@ -18,39 +18,24 @@ One service. Dependencies live in the named volume `web_node_modules` (the repo 
 `up` reinstalls on start; a dependency change needs only a restart of `web` — never delete a volume
 to refresh dependencies.
 
-## ⚠️ The bundled clip is NOT a burger restaurant — re-shoot or re-supply before shipping
+## The clip and the anchors
 
-`assets/burger-master.mp4` (+ the 10 MB `ویدیو هیروسکشن.mp4` it was copied from) renders as a
-**real-estate walkthrough**: a villa exterior with a pool at dusk, moving into a living room and
-kitchen. There is **no display case and no burgers anywhere in it.**
-
-How that was established — worth repeating rather than trusting this note: the `<video>` element on
-the running page reports the exact intrinsic size and duration of this re-encoded master
-(1168x768 / 9.042s), and screenshots of the page at 0%, ~67% and 100% of the runway all show that
-interior. (A grey-scale SSIM cross-check against the repo's real-estate references was **not**
-decisive — 0.36 vs 0.40 for an unrelated burger clip — so do not cite image-diff scores as proof
-either way; look at the frames.)
-
-The burger data in `src/data/menu.ts` is a different project's concept, so:
-
-* the four `MENU[].anchor` values are **placeholders on an even left-to-right spread**, not real
-  product positions;
-* the mechanic itself (scrub, reveal, hover, order dialog, basket) is complete and verified, so
-  swapping the footage is the only work left.
-
-**To swap the footage:** replace `assets/burger-master.mp4`, re-run the re-encode below, then re-tune
-the anchors with `tools/anchor-grid.html` (that file documents the two commands + the grid). The
-master needs its keyframe layout re-checked with `ffprobe` — a single-keyframe master scrubs badly.
+`assets/burger-master.mp4` (8.0s, 192 frames @ 24fps, 864x480 + an AAC track nobody plays) is the
+first-person walk-in that ends on the display case of four burgers. The four `MENU[].anchor` values
+in [`src/data/menu.ts`](src/data/menu.ts) were **measured off that last frame**, not guessed: the
+burgers sit in a band about 40–66% down the frame, with clusters centred near 12.5 / 36 / 60.5 / 85%
+across (the case itself sits slightly left of centre). Re-measure with
+[`tools/anchor-grid.html`](tools/anchor-grid.html) whenever the footage changes — that file documents
+the two commands and the percentage grid. The dot marks the burger; the card hangs below it.
 
 ## Non-obvious things worth knowing
 
 * **The clip is re-encoded on purpose — don't drop the camera original in.**
-  `assets/burger-master.mp4` (9.04s, 217 frames @ 24fps, 1168x768) carries a **single keyframe for
-  the whole clip**, so every seek decoded from frame 0 and scrubbing stuttered. The shipped
-  `public/media/burger-scrub.mp4` is that master re-encoded with `-g 4 -keyint_min 4 -sc_threshold 0
-  -bf 0` (a keyframe every 4 frames — 54 of them) plus `+faststart` and no audio, so any seek decodes
-  at most 3 frames. The exact commands and the poster extraction sit at the top of
-  [`src/data/media.ts`](src/data/media.ts).
+  `assets/burger-master.mp4` carries a **single keyframe for the whole clip**, so every seek decoded
+  from frame 0 and scrubbing stuttered. The shipped `public/media/burger-scrub.mp4` is that master
+  re-encoded with `-g 4 -keyint_min 4 -sc_threshold 0 -bf 0` (a keyframe every 4 frames — 47 of
+  them), `-an`, `+faststart`, at `-crf 19`, so any seek decodes at most 3 frames. The exact commands
+  and the poster extraction sit at the top of [`src/data/media.ts`](src/data/media.ts).
 * **Scrubbing is the experience, and the clip never plays.** [`useScrollScrub`](src/hooks/useScrollScrub.ts)
   is the whole engine: passive scroll/resize listeners only cache the *target* progress and wake a
   single `requestAnimationFrame` loop; the loop eases the displayed progress toward it and writes
@@ -65,17 +50,25 @@ master needs its keyframe layout re-checked with `ffprobe` — a single-keyframe
 * **Hotspot anchors are in *video* space, not viewport space.** The stage renders the clip with
   `object-fit: cover`, which crops a different amount at every aspect ratio; `HotspotOverlay`
   therefore measures the stage and sets the overlay's box to exactly the cover box (via
-  `ResizeObserver` + `STAGE_VIDEO_SIZE`), so a card anchored at 15% of the frame stays over whatever
-  is 15% of the way across the footage on any window. Switching those to viewport percentages breaks
-  alignment the moment the window changes shape. Keep the anchors' pointer dot on the product and
-  let the card hang below it.
+  `ResizeObserver` + `STAGE_VIDEO_SIZE`), so a card anchored at 12.5% of the frame stays over the
+  burger that is 12.5% of the way across the footage on any window. Switching those to viewport
+  percentages breaks alignment the moment the window changes shape.
+* **The layout is chosen by *aspect ratio*, not by width — that matters here.** `object-fit: cover`
+  only ever shows `stageAspect / videoAspect` of a height-limited frame, and the clip is 1.8. A
+  portrait tablet (0.75) therefore shows just **42%** of the case's width: the outer burgers are
+  cropped away, so a width-only breakpoint (`md:`) left two tags pointing at nothing and two hanging
+  off-screen. `MIN_MAPPED_ASPECT` (1.58) in `HotspotOverlay` picks the per-burger layout when the
+  stage is landscape enough, and docks the four tags into a row (`grid-cols-2 sm:grid-cols-4`) when
+  it is not. Keep that decision on the measured stage, not on a media query.
+* **Known trade-off at the mapped threshold**: the tags are fixed-px cards, so in a window sitting
+  just above `MIN_MAPPED_ASPECT` (e.g. 1280x800) the outermost card is trimmed ~12px on its left
+  edge — the dot stays exactly on its burger. Raise `MIN_MAPPED_ASPECT` to hide that at the cost of
+  docking the row in more windows, or nudge the first anchor right to favour the card over the dot.
 * **Runway geometry**: the runway is `400vh` with a `100vh` sticky stage pinned inside it (plain
-  `vh`, per the brief), so the scrub distance is runway minus one viewport —
-  `measureRunway()` in [`src/lib/scrub.ts`](src/lib/scrub.ts) is the single source of truth for both
-  the hook and any future deep-linking.
-* **Below `md` the tags dock into a 2x2 grid** instead of being pinned to the frame: `object-fit:
-  cover` on a portrait phone crops away the outer burgers entirely, so per-burger anchoring would
-  point at nothing. Both layouts live in `HotspotOverlay` and share `HotspotCard`.
+  `vh`, per the brief), so the scrub distance is runway minus one viewport — `measureRunway()` in
+  [`src/lib/scrub.ts`](src/lib/scrub.ts) is the single source of truth for both the hook and any
+  future deep-linking. Note it measures the live DOM: a script that scrolls to a fraction of the
+  runway must recompute it after changing the viewport size, or it will scroll to the wrong frame.
 * **The reveal is driven by an attribute, not by state per card.** The stage flips `data-reveal` and
   `src/index.css` staggers `.hotspot` from a frozen resting state using each card's `--i`.
 * **`BASE44_PREVIEW_MODE`** gates sandbox-only dev-server tweaks in [`vite.config.ts`](vite.config.ts)
@@ -87,18 +80,21 @@ master needs its keyframe layout re-checked with `ffprobe` — a single-keyframe
   anchors). `public/media/*` is served with HTTP range support by the Vite dev server, which is what
   lets the browser seek without downloading the whole file first — if the media ever moves behind a
   custom server, keep byte ranges working.
+* The two Persian-named uploads at the repo root (`ویدیو هیروسکشن.mp4` and the prompt `.txt` files)
+  are leftovers from the original import: the root `.mp4` is an unrelated real-estate walkthrough and
+  nothing in the app reads any of them.
 
 ## How to verify a change here
 
 1. `curl -sI http://localhost:3000/` answers, then load the page.
 2. Scroll to `runwayTop + 0.5 * span` (`measureRunway()`) and check `video.currentTime` settles at
-   about `duration / 2`; scroll back up and it must go **down**; stop scrolling and it must freeze
-   (`paused === true`, no drift).
+   about `duration / 2` (4.0s for this 8s clip); scroll back up and it must go **down**; stop
+   scrolling and it must freeze (`paused === true`, no drift).
 3. The cue ("Scroll down to enter") is at opacity 1 at the top and 0 by ~7% of the runway.
-4. At the very end of the page `#stage-viewport[data-reveal]` is `on`, four `.hotspot` cards have a
-   non-zero box, and the cue is invisible.
+4. At the very end of the page `#stage-viewport[data-reveal]` is `on`, and four `.hotspot` cards have
+   a non-zero box: a horizontal row over the case at ≥1.58 stage aspect, a docked row otherwise.
 5. Click a card: the dialog shows the name, description, price, a working [-] qty [+] stepper, and an
    "Add to Order — $<total>" button; adding closes it, updates `Cart (n)`, and shows the toast. The
    basket opens, lists the line, and removing it falls back to the empty state.
-6. Narrow the viewport: the tags dock into the 2x2 grid, the dialog and basket become bottom sheets,
-   and `document.documentElement.scrollWidth` stays within the client width.
+6. Narrow the viewport: the tags dock into the row, the dialog and basket become bottom sheets, and
+   `document.documentElement.scrollWidth` stays within the client width.
