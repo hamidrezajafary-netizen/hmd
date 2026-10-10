@@ -1,0 +1,35 @@
+# Local development stack for the Khoshmazeh burger experience.
+# The Vite dev server runs straight from the cloned source (bind-mounted) so edits show up
+# without a rebuild — nothing here builds or serves a prebuilt bundle.
+services:
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    restart: on-failure
+    volumes:
+      - ./:/app
+      - web_node_modules:/app/node_modules
+    environment:
+      # Set by the platform in the sandbox; consumed by vite.config.ts only when it equals "1".
+      - BASE44_PREVIEW_MODE
+      - BASE44_SANDBOX_HOST_DOMAIN
+      - BASE44_PUBLIC_HOST_SUFFIX
+      # Vite (>= 6.1) appends this to allowedHosts, so the proxied preview host is accepted.
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+    command:
+      - sh
+      - -ec
+      - npm install --no-audit --no-fund --loglevel=error && exec npx vite --host 0.0.0.0 --port 5173
+    ports:
+      - '3000:5173'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'node -e "fetch(\"http://127.0.0.1:5173/\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"'
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+
+volumes:
+  web_node_modules:
