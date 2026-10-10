@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --ease-premium: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  html {
+    background-color: theme('colors.ink.900');
+    /* `scroll-behavior` is intentionally left alone: the scrub maps scroll → video time, so a
+       smooth-animated scroll would smear the timeline instead of following the finger. */
+  }
+
+  body {
+    margin: 0;
+    background-color: theme('colors.ink.900');
+    color: theme('colors.cream.DEFAULT');
+    font-family: theme('fontFamily.sans');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: rgba(214, 35, 0, 0.85);
+    color: #fff;
+  }
+
+  /* A thin, warm scrollbar — the page itself is the interface here. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #060709;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 199, 44, 0.22);
+    border-radius: 999px;
+    border: 2px solid #060709;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 199, 44, 0.4);
+  }
+}
+
+@layer components {
+  /**
+   * The "physical tag" glass a hotspot is built from: it must stay legible over a moving
+   * photograph, so it is a dark translucent sheet with a bright hairline, never a light blur.
+   */
+  .glass-tag {
+    @apply relative overflow-hidden rounded-2xl border border-white/15 bg-ink-900/60 backdrop-blur-xl;
+  }
+
+  .glass-tag::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 199, 44, 0.55),
+      transparent
+    );
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-gold/80 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+}
+
+/**
+ * Hotspot reveal. The stage flips `data-reveal` once the video reaches the display case; every
+ * card animates from the same frozen resting state, staggered by its `--i` index. Driving it from
+ * an attribute means the scroll loop never re-renders React — it only toggles the attribute.
+ */
+.hotspot {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(0.96);
+  transition:
+    opacity 620ms var(--ease-premium),
+    transform 760ms var(--ease-premium),
+    box-shadow 320ms var(--ease-premium),
+    border-color 320ms var(--ease-premium);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  pointer-events: none;
+}
+
+[data-reveal='on'] .hotspot {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Once revealed, a hover/focus lift answers immediately instead of waiting for the stagger. */
+[data-reveal='on'] .hotspot:hover,
+[data-reveal='on'] .hotspot:focus-visible {
+  transition-delay: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hotspot {
+    transition-duration: 1ms;
+    transition-delay: 0ms;
+  }
+}

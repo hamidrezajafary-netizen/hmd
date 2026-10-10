@@ -1,0 +1,99 @@
+<!doctype html>
+<!--
+  Anchor-tuning aid, deliberately kept OUT of `public/` so it never ships with the app.
+
+  To re-tune the hotspot anchors in `src/data/menu.ts`:
+
+    1. Extract the clip's last frame (the display case) into a temporary public folder:
+         mkdir -p public/_tune
+         docker run --rm -v "$PWD":/w --entrypoint sh jrottenberg/ffmpeg:6.0-alpine -c \
+           'ffmpeg -y -sseof -0.05 -i /w/assets/burger-master.mp4 -frames:v 1 -q:v 3 /w/public/_tune/final.jpg'
+         cp tools/anchor-grid.html public/_tune/index.html
+    2. Open <http://localhost:3000/_tune/index.html> and read each burger's centre as a percentage
+       of the frame (x across, y down). Note the frame's intrinsic size — the percentages are of the
+       frame, never of the viewport.
+    3. Put those numbers into `MENU[].anchor`, then delete `public/_tune/`.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hotspot anchor tuning</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: #101214;
+        color: #eaf2f5;
+        font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      .wrap {
+        padding: 12px;
+      }
+      h1 {
+        font-size: 13px;
+        margin: 0 0 8px;
+        color: #9fe8f5;
+        font-weight: 600;
+      }
+      .frame {
+        position: relative;
+        width: 1168px;
+        max-width: calc(100vw - 24px);
+        border: 1px solid #2b3238;
+      }
+      .frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(to right, rgba(0, 229, 255, 0.9) 0 1.5px, transparent 1.5px 10%),
+          repeating-linear-gradient(to bottom, rgba(0, 229, 255, 0.9) 0 1.5px, transparent 1.5px 10%),
+          repeating-linear-gradient(to right, rgba(255, 255, 255, 0.32) 0 1px, transparent 1px 5%),
+          repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.32) 0 1px, transparent 1px 5%),
+          repeating-linear-gradient(to right, rgba(255, 255, 255, 0.11) 0 1px, transparent 1px 1%),
+          repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 0 1px, transparent 1px 1%);
+      }
+      .lbl {
+        position: absolute;
+        font-size: 11px;
+        color: #9fe8f5;
+        text-shadow: 0 0 3px #000, 0 0 3px #000;
+      }
+      .lbl.x {
+        top: 2px;
+        transform: translateX(2px);
+      }
+      .lbl.y {
+        left: 2px;
+        transform: translateY(2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Last frame — read each burger's centre as % of the frame (x = across, y = down)</h1>
+      <div class="frame" id="frame">
+        <img src="./final.jpg" alt="last frame of the clip" />
+        <div class="grid"></div>
+      </div>
+    </div>
+    <script>
+      const frame = document.getElementById('frame');
+      for (let i = 10; i <= 90; i += 10) {
+        const x = document.createElement('div');
+        x.className = 'lbl x';
+        x.style.left = i + '%';
+        x.textContent = i;
+        frame.appendChild(x);
+        const y = document.createElement('div');
+        y.className = 'lbl y';
+        y.style.top = i + '%';
+        y.textContent = i;
+        frame.appendChild(y);
+      }
+    </script>
+  </body>
+</html>
