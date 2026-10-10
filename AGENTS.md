@@ -35,6 +35,24 @@ origins stay single-origin.
   other value keeps stock Vite behaviour — nothing else in the app reads the flag.
 * **Property data** lives in `src/data/properties.ts` and mirrors a database row (id/slug/price/beds/
   baths/sqft/agentId/images). Swapping it for an API response means changing that one module.
+* **The home hero is scroll-scrubbed, never played.** `HeroScroll` pins a `100svh` stage inside a
+  `300svh` runway (260svh on phones) and maps scroll progress straight onto `video.currentTime` —
+  0% scroll → frame 0, 100% → last frame. `useScrollVideoScrub` is the whole engine: passive
+  scroll/resize listeners only cache the target progress, one `requestAnimationFrame` loop eases
+  toward it and seeks, and the copy fade is written through refs — so scrolling never re-renders
+  React or reads layout. Nothing calls `play()`; the element carries no `autoplay`/`loop`. The
+  tuning dials (smoothing, seek epsilon, copy fade) sit at the top of that hook.
+* **The hero clip is re-encoded on purpose.** `public/media/hero-scrub.mp4` (H.264, keyframe every
+  6 frames = 0.25s, no audio, `+faststart`) is what makes seeking smooth; the repo-root
+  `ویدیو هیروسکشن.mp4` is the untouched master, and its single keyframe for all 217 frames made
+  scrubbing stutter badly. To replace the footage:
+  `ffmpeg -i master.mp4 -an -c:v libx264 -preset slower -crf 24 -g 6 -keyint_min 6 -sc_threshold 0 -bf 0 -pix_fmt yuv420p -movflags +faststart public/media/hero-scrub.mp4`
+  plus the poster (`-vf "select=eq(n\,0)" -frames:v 1 -q:v 4 public/media/hero-poster.jpg`).
+  Swapping those two files needs no code change — see `src/components/sections/heroMedia.ts`.
+* **Hero degradation paths.** Reduced motion (`prefers-reduced-motion`) and a video that fails to
+  load both fall back to `HeroStatic`, the original photographic hero, instead of the pinned
+  runway. Until the clip can be scrubbed (readyState ≥ 2) the stage shows the poster, keeps the
+  copy fully opaque and never scroll-locks the page.
 
 ## Verifying the site
 
@@ -48,3 +66,8 @@ origins stay single-origin.
    Contact Agent and Schedule a Viewing both POST to `/api/inquiries`; verify with
    `curl -s http://localhost:8000/api/inquiries`.
 6. Every page has a footer newsletter form that also posts to `/api/inquiries` (`type=newsletter`).
+7. Hero scrub: at the top of the page the hero shows frame 0 with the video `paused` (no
+   `autoplay`/`loop` attributes). Scrolling to 25/50/75/100% of the runway
+   (`section.offsetHeight - stage.offsetHeight` past the section's offset top) must land
+   `video.currentTime` on 0.25/0.5/0.75/1.0 of its ~9.04s duration, and scrolling back up must
+   walk the timeline backwards while `video.currentTime` never advances on its own.
