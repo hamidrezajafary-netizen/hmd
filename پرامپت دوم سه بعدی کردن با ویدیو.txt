@@ -1,0 +1,583 @@
+I want to completely replace the current HERO SECTION background/image with the video file I am providing.
+
+IMPORTANT:
+This is NOT a normal autoplay background video.
+
+I want the hero video to behave as a premium scroll-driven 3D experience.
+
+The user's scroll position must control the video's playback position.
+
+==================================================
+1. CORE EXPERIENCE
+==================================================
+
+Replace the current hero visual with my provided video.
+
+The video MUST NOT autoplay.
+
+The video MUST NOT start playing automatically when the page loads.
+
+The video MUST NOT loop automatically.
+
+The video should remain paused until the user starts scrolling.
+
+The user's vertical scroll position should directly control the video timeline.
+
+Think of the interaction as:
+
+USER SCROLLS DOWN
+        ↓
+VIDEO PROGRESSES FORWARD
+        ↓
+USER STOPS SCROLLING
+        ↓
+VIDEO STOPS AT THAT EXACT FRAME
+
+The experience should feel like the user is physically moving through a 3D scene rather than simply watching a video.
+
+==================================================
+2. SCROLL-TO-VIDEO MAPPING
+==================================================
+
+Create a dedicated scroll area for the Hero.
+
+Pin/sticky the hero viewport while the user scrolls through the animation.
+
+For example:
+
+Hero video section height:
+approximately 250vh–400vh depending on the video duration.
+
+The actual video viewport remains sticky at:
+
+top: 0
+
+height:
+100vh
+
+The user's scroll progress through this section should map from:
+
+0% scroll → 0% video
+100% scroll → 100% video
+
+Therefore:
+
+scrollProgress = 0
+→ video.currentTime = 0
+
+scrollProgress = 0.25
+→ video.currentTime = 25% of duration
+
+scrollProgress = 0.50
+→ video.currentTime = 50% of duration
+
+scrollProgress = 0.75
+→ video.currentTime = 75% of duration
+
+scrollProgress = 1
+→ video.currentTime = 100% of duration
+
+The entire video must be traversed from beginning to end through scrolling.
+
+The video must NOT reach the end halfway through the hero section.
+
+The final frame of the video should correspond to the end of the scroll-driven hero experience.
+
+==================================================
+3. VERY IMPORTANT — SMOOTHNESS
+==================================================
+
+The MOST IMPORTANT requirement is:
+
+NO LAG.
+NO STUTTER.
+NO JERKY SEEKING.
+NO VISIBLE FRAME JUMPS.
+NO RANDOM PLAYBACK.
+NO DELAY BETWEEN SCROLL AND VIDEO.
+
+Do NOT simply attach:
+
+scroll event → video.currentTime = ...
+
+and continuously write currentTime on every raw scroll event.
+
+Instead, implement a highly optimized scroll-driven animation system.
+
+Use:
+
+requestAnimationFrame
+
+to synchronize video seeking with browser rendering.
+
+The scroll handler should ONLY update the target scroll progress.
+
+The actual video.currentTime updates should happen inside requestAnimationFrame.
+
+Use a smooth interpolation mechanism between:
+
+targetVideoTime
+
+and
+
+currentVideoTime
+
+to prevent harsh jumps.
+
+Conceptually:
+
+targetTime = scrollProgress * videoDuration
+
+currentTime += (targetTime - currentTime) * smoothingFactor
+
+Then update:
+
+video.currentTime = currentTime
+
+inside requestAnimationFrame.
+
+However, the smoothing must remain responsive enough that the video still feels directly connected to the user's scrolling.
+
+Do NOT create noticeable lag between the user's scroll and the video.
+
+The interaction should feel extremely smooth and premium.
+
+==================================================
+4. DO NOT PLAY THE VIDEO
+==================================================
+
+This is critical.
+
+Do NOT use:
+
+video.play()
+
+for the scroll-driven experience.
+
+The video should remain paused.
+
+We are SCRUBBING the video timeline.
+
+Scrolling controls:
+
+video.currentTime
+
+not:
+
+video.play()
+
+The video should never start playing independently.
+
+If the user stops scrolling, the video should stop exactly at the corresponding frame.
+
+==================================================
+5. VIDEO PRELOADING
+==================================================
+
+Optimize the video for smooth seeking.
+
+Use:
+
+preload="auto"
+
+Load the video's metadata immediately.
+
+Preload the video as aggressively as practical without freezing the initial page.
+
+The browser should have enough data available so that scroll-driven seeking does not constantly wait for network requests.
+
+If necessary, create a loading state for the hero while the video is preparing.
+
+Do not allow the user to begin the scroll animation before the video is sufficiently ready.
+
+However, do not block the entire website unnecessarily.
+
+The rest of the page should remain responsive.
+
+==================================================
+6. VIDEO SEEKING OPTIMIZATION
+==================================================
+
+Because this is a scroll-controlled video, seeking performance is extremely important.
+
+Use an implementation optimized for random-access seeking.
+
+Prefer video encoding/settings that make seeking fast.
+
+If the supplied video format or encoding is likely to cause stuttering during frequent currentTime changes, do NOT simply accept the poor performance.
+
+Explain in the implementation comments what encoding characteristics are preferred.
+
+Ideally the video should have:
+
+- Frequent keyframes
+- Reasonable bitrate
+- Web-optimized MP4/H.264 or another browser-friendly format
+- No unnecessarily huge resolution
+- No excessive bitrate
+- Fast random seeking
+
+If possible, support an optimized WebM version as well.
+
+The visual quality should remain high while prioritizing smooth scroll scrubbing.
+
+==================================================
+7. PREVENT SEEKING FLOOD
+==================================================
+
+Do not send hundreds of unnecessary currentTime updates per second.
+
+Only update the video's currentTime when the new target time differs meaningfully from the current rendered time.
+
+Use requestAnimationFrame to control updates.
+
+Avoid:
+
+scroll event → immediate currentTime update
+
+Use:
+
+scroll event
+→ calculate target progress
+→ requestAnimationFrame
+→ smoothly update currentTime
+
+This should dramatically reduce unnecessary work.
+
+==================================================
+8. HERO VISUAL DESIGN
+==================================================
+
+Keep the existing typography and visual identity of the current Hero section.
+
+The video should replace the current hero image/visual.
+
+Keep the existing:
+
+- Navigation
+- Logo
+- Headline
+- Supporting text
+- CTA if currently present
+
+But make sure the text remains readable over the video.
+
+Use a very subtle overlay if necessary.
+
+Do NOT place a heavy dark overlay over the video.
+
+The video should remain visually dominant.
+
+==================================================
+9. 3D EXPERIENCE
+==================================================
+
+The goal is to create the feeling that the website itself is 3D.
+
+As the user scrolls:
+
+the camera/view inside the video should appear to move through the environment.
+
+The user should feel:
+
+"I am controlling this scene."
+
+NOT:
+
+"I am scrolling past a video."
+
+The video timeline should therefore be perfectly synchronized with the scroll position.
+
+The transition from frame to frame should feel cinematic.
+
+==================================================
+10. SCROLL EXPERIENCE
+==================================================
+
+When the user enters the Hero:
+
+The first frame of the video should be visible.
+
+As they slowly scroll:
+
+The video should progress slowly.
+
+As they scroll faster:
+
+The video should move faster through its timeline.
+
+When they stop:
+
+The video should stop.
+
+When they reverse scroll:
+
+The video should move backward accordingly.
+
+This MUST work in both directions.
+
+Example:
+
+Scroll down:
+0s → 5s → 10s → 15s → 20s
+
+Scroll back up:
+20s → 15s → 10s → 5s → 0s
+
+The video must never continue playing on its own.
+
+==================================================
+11. SCROLL DISTANCE
+==================================================
+
+Give the hero enough vertical scroll distance to allow the entire video to be experienced comfortably.
+
+Do NOT make the video complete after a tiny amount of scrolling.
+
+The user should have enough scroll distance to appreciate the 3D movement.
+
+Choose an appropriate hero scroll duration based on the actual video length.
+
+Prefer something around:
+
+300vh
+
+as a starting point.
+
+Adjust this if necessary after testing.
+
+The goal is a smooth cinematic experience, not an excessively long scroll.
+
+==================================================
+12. HERO TEXT BEHAVIOR
+==================================================
+
+Keep the current hero text visible during the initial portion of the experience.
+
+Optionally, create subtle motion:
+
+At the beginning:
+headline + subtitle visible.
+
+As the user starts scrolling:
+the text can gradually fade/move away.
+
+This should be subtle.
+
+Do NOT let the text interfere with the video.
+
+If the current design looks better with the text remaining fixed, prioritize the original visual design.
+
+==================================================
+13. END OF HERO
+==================================================
+
+When the user reaches the end of the Hero scroll section:
+
+The video must be exactly at its final frame.
+
+Then the Hero should naturally transition into the existing "Who We Are" / next section.
+
+There should be no sudden jump.
+
+The transition should feel seamless.
+
+At the exact end:
+
+scrollProgress = 1
+video.currentTime = video.duration
+
+Then release the sticky hero and allow the next section to continue normally.
+
+==================================================
+14. MOBILE
+==================================================
+
+The scroll-driven experience must also work on mobile.
+
+However, mobile devices have more limited performance.
+
+Optimize accordingly.
+
+Do not destroy performance on iPhone/Android.
+
+On mobile:
+
+- Maintain the same concept
+- Keep the video responsive
+- Use an appropriate resolution
+- Avoid excessive memory usage
+- Keep the interaction smooth
+
+If the provided video is too heavy for mobile, implement a responsive mobile video source if possible.
+
+Do NOT simply disable the experience unless absolutely necessary.
+
+==================================================
+15. REDUCED MOTION
+==================================================
+
+Respect:
+
+prefers-reduced-motion
+
+If the user has reduced motion enabled:
+
+Do not force the cinematic scroll animation.
+
+Instead, provide a simpler static hero frame or a normal lightweight experience.
+
+Accessibility must be respected.
+
+==================================================
+16. PERFORMANCE
+==================================================
+
+This interaction must be highly optimized.
+
+Avoid:
+
+- Heavy JavaScript loops
+- Multiple scroll listeners
+- Excessive DOM updates
+- React re-renders on every scroll event
+- Unnecessary state updates
+- Continuous layout calculations
+- Expensive CSS effects
+- Heavy blur effects
+- Multiple simultaneous animations
+
+Do not put the scroll progress into React state if doing so causes unnecessary component re-renders.
+
+Prefer direct DOM/video manipulation through refs or an equivalent performant mechanism.
+
+Use:
+
+requestAnimationFrame
+
+for the animation loop.
+
+Use passive scroll listeners where appropriate.
+
+Use CSS transforms instead of triggering layout whenever possible.
+
+==================================================
+17. LOADING EXPERIENCE
+==================================================
+
+Create a minimal premium loading state for the video.
+
+While the video is preparing:
+
+Show a subtle loading indicator or very minimal loading treatment.
+
+Do not show a large spinner.
+
+Once the video is ready:
+
+Smoothly reveal the video.
+
+Do not reveal a blank black rectangle.
+
+The transition should feel intentional.
+
+==================================================
+18. FALLBACK
+==================================================
+
+If the video fails to load:
+
+Use the existing Hero image as a fallback.
+
+The website must remain functional.
+
+Do not allow a broken video to create a blank Hero section.
+
+==================================================
+19. DESKTOP BEHAVIOR
+==================================================
+
+Desktop should be the primary experience.
+
+The hero should occupy the full viewport:
+
+width: 100vw
+height: 100vh
+
+Video:
+
+object-fit: cover
+
+Make sure the video fills the viewport without distortion.
+
+Maintain the correct aspect ratio.
+
+Do not stretch the video.
+
+==================================================
+20. IMPLEMENTATION QUALITY
+==================================================
+
+Build this as a production-quality implementation.
+
+Do not create a fake visual simulation.
+
+Actually connect:
+
+scroll progress → video timeline
+
+The implementation should be clean, maintainable and easy to modify.
+
+Keep the existing site's design and components intact.
+
+Only modify what is necessary for the Hero.
+
+Do not rebuild the entire website.
+
+==================================================
+21. FINAL TEST
+==================================================
+
+After implementation, test the Hero carefully.
+
+Test:
+
+1. Page load
+2. No automatic video playback
+3. Slow scrolling
+4. Fast scrolling
+5. Stopping scroll
+6. Reverse scrolling
+7. Reaching exact beginning
+8. Reaching exact end
+9. Refreshing page
+10. Mobile scrolling
+11. Touch scrolling
+12. Different screen sizes
+13. Slow network
+14. Video loading
+15. Video failure fallback
+
+MOST IMPORTANT:
+
+The video must feel completely attached to the user's scroll.
+
+There must be no feeling of:
+
+"the video is playing"
+
+Instead, the feeling should be:
+
+"I am controlling the camera movement by scrolling."
+
+The final result should feel like a premium, cinematic, interactive 3D real estate website.
+
+Do not autoplay the video.
+
+Do not loop the video.
+
+Do not use video.play() for the main experience.
+
+The scroll position must control the entire video from the first frame to the final frame.
+
+Prioritize smoothness, responsiveness and visual quality above everything else.

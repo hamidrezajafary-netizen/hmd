@@ -1,0 +1,819 @@
+I want you to build a complete, production-quality real estate website directly in Base Code.
+
+IMPORTANT:
+I have attached reference screenshots showing the exact visual direction, layout, spacing, composition, UI/UX style, typography hierarchy, card design, colors, image treatment, and overall aesthetic that I want.
+
+Use the attached reference images as the PRIMARY visual reference.
+
+The goal is NOT to create a generic real estate website.
+
+The goal is to create a website that feels extremely close to the attached references in visual language and composition, while making the UX, interactions, responsiveness, and functionality even more polished and complete.
+
+Think of this as recreating the design system and experience of the reference website from scratch, not simply making a similar template.
+
+==================================================
+1. OVERALL DESIGN DIRECTION
+==================================================
+
+Create a premium, modern, minimalist real estate agency website.
+
+Brand:
+HORIZON PROPERTIES
+
+Visual personality:
+- Premium
+- Architectural
+- Elegant
+- Modern
+- Trustworthy
+- Minimal
+- High-end real estate
+- Editorial / luxury property magazine feeling
+- Clean but not boring
+- Strong visual hierarchy
+- Large architectural photography
+- Generous whitespace
+- Sophisticated typography
+- Subtle micro-interactions
+
+The design should feel suitable for a high-end real estate company dealing with luxury homes, investment properties, and premium developments.
+
+Do NOT make it look like:
+- A generic WordPress real estate template
+- A cheap property listing website
+- A SaaS dashboard
+- An overly colorful startup website
+- A glassmorphism-heavy website
+- A website overloaded with animations
+
+Keep the visual language very close to the attached screenshots.
+
+==================================================
+2. COLOR SYSTEM
+==================================================
+
+Use a refined color palette based on the references:
+
+Primary:
+Deep navy / architectural blue
+
+Secondary:
+Warm off-white / ivory
+
+Accent:
+Muted champagne / warm beige / subtle gold
+
+Text:
+Very dark navy / near-black
+
+Background:
+White and very light warm-gray sections
+
+The colors should feel luxurious and restrained.
+
+Avoid excessive gradients.
+
+Use the gold/champagne color mainly for:
+- Logo details
+- Small labels
+- Fine borders
+- Icons
+- Subtle highlights
+- Selected states
+
+==================================================
+3. TYPOGRAPHY
+==================================================
+
+Use a modern premium sans-serif typeface.
+
+Typography should have a strong hierarchy:
+
+Hero headline:
+Large, bold, elegant, highly readable.
+
+Section labels:
+Small uppercase text with letter spacing.
+
+Section titles:
+Large, bold, sophisticated.
+
+Body:
+Clean, comfortable line height.
+
+Buttons:
+Medium-weight, compact and premium.
+
+Do not use overly futuristic fonts.
+
+Typography should closely resemble the attached reference.
+
+==================================================
+4. HEADER / NAVIGATION
+==================================================
+
+Create a transparent/dark navy header positioned over the hero section.
+
+Desktop:
+
+Left:
+HORIZON PROPERTIES logo.
+
+The logo should visually match the reference:
+- Minimal architectural icon
+- Champagne/gold line icon
+- White text
+- Elegant and compact
+
+Center:
+Navigation links:
+
+Home
+Properties
+About Us
+Services
+Team
+Contact
+
+Right:
+Premium outlined phone/contact button:
+
+☎ (555) 246-7890
+
+Header requirements:
+- Transparent over hero
+- Sticky navigation after scrolling
+- Smooth transition from transparent to slightly opaque white/navy background depending on scroll position
+- Subtle backdrop blur only if it improves readability
+- Active navigation state
+- Elegant hover animation
+- Mobile hamburger menu
+- Mobile menu should animate smoothly
+- Header must remain usable on all screen sizes
+
+Do NOT make the header excessively tall.
+
+==================================================
+5. HERO SECTION
+==================================================
+
+The hero is the most visually important section.
+
+Recreate the composition of the attached reference as closely as possible.
+
+Use a full-width luxury modern architectural house image.
+
+Hero image:
+- Modern luxury villa
+- Large glass walls
+- Infinity pool
+- Sunset / blue-hour lighting
+- Premium architecture
+- Cinematic photography
+- Warm interior lighting
+- Dark blue evening sky
+
+Hero should occupy a large portion of the first viewport.
+
+Place the main content toward the upper-middle portion of the hero:
+
+Headline:
+
+"Discover Exceptional
+Homes & Investments"
+
+Use a large white headline.
+
+Supporting text:
+
+"Premium properties in prime locations. Find your dream home
+or the perfect investment with confidence."
+
+Keep the text centered.
+
+The text should have excellent contrast.
+
+Add subtle dark/blue image overlay so the typography remains readable without destroying the image.
+
+Hero composition should closely follow the reference image:
+- Navigation at top
+- Large headline
+- Supporting paragraph
+- Large architectural image dominating the section
+- Strong visual transition into the white content area below
+
+Add subtle entrance animation:
+- Headline fades + moves upward
+- Description follows
+- Hero image subtly scales from 1.03 to 1
+- Keep animation elegant and fast
+
+Do NOT over-animate.
+
+==================================================
+6. ABOUT / WHO WE ARE SECTION
+==================================================
+
+Immediately below the hero, create a clean white section inspired directly by the reference.
+
+Desktop layout:
+
+LEFT:
+Small gold/champagne uppercase label:
+
+ABOUT US
+
+Large heading:
+
+Who We Are
+
+Body text:
+
+"At Horizon Properties, we connect people with extraordinary homes and smart investments. Integrity, transparency, and client satisfaction are at the heart of everything we do."
+
+Add a premium CTA button:
+
+Learn More →
+
+RIGHT:
+Create an asymmetric image composition.
+
+Main image:
+Large luxury modern home with pool / architectural photography.
+
+Secondary image:
+A narrower vertical image positioned beside the main image.
+
+The composition should feel editorial and premium.
+
+Include a circular/rounded arrow button overlapping the image area.
+
+The image corners should have rounded corners similar to the reference.
+
+On hover:
+- Images subtly zoom
+- Arrow button animates
+- No excessive effects
+
+==================================================
+7. FEATURED PROPERTIES
+==================================================
+
+Create a premium Featured Properties section based heavily on the reference.
+
+Centered heading:
+
+FEATURED
+
+Featured Properties
+
+Create a horizontal property carousel.
+
+Each property card should contain:
+- Large property image
+- Property name
+- Location
+- Price
+- Optional property type
+- Elegant rounded corners
+
+Primary example:
+
+"Lakeside Modern Villa"
+
+Location:
+Austin, Texas, USA
+
+Price:
+$2.35 Million
+
+Use premium architectural property imagery.
+
+The layout should resemble the reference:
+- Large primary property card
+- Several smaller adjacent cards
+- Horizontal visual rhythm
+- Left and right navigation arrows
+- Cards partially visible on desktop to communicate that the section is scrollable
+
+Carousel behavior:
+- Drag/swipe support
+- Mouse drag on desktop
+- Touch swipe on mobile
+- Previous/next buttons
+- Smooth snapping
+- Infinite looping if appropriate
+- Keyboard accessible
+- No jarring movement
+
+On card hover:
+- Slight image zoom
+- Very subtle elevation
+- Information remains readable
+
+Do not make cards overly rounded or "app-like".
+
+==================================================
+8. PROPERTY DATA
+==================================================
+
+Create at least 8 realistic property cards.
+
+Examples:
+
+1.
+Lakeside Modern Villa
+Austin, Texas, USA
+$2.35 Million
+
+2.
+Pacific Glass House
+Malibu, California, USA
+$4.8 Million
+
+3.
+Desert Horizon Estate
+Scottsdale, Arizona, USA
+$3.15 Million
+
+4.
+Oceanfront Residence
+Miami, Florida, USA
+$5.2 Million
+
+5.
+Modern Hillside Retreat
+Los Angeles, California, USA
+$3.75 Million
+
+6.
+Palm Garden Residence
+Beverly Hills, California, USA
+$6.4 Million
+
+7.
+Contemporary Lake House
+Lake Tahoe, Nevada, USA
+$2.95 Million
+
+8.
+Architectural Downtown Penthouse
+Austin, Texas, USA
+$1.85 Million
+
+Use realistic luxury architectural imagery.
+
+==================================================
+9. PROPERTY DISCOVERY EXPERIENCE
+==================================================
+
+Make the website more complete than the reference.
+
+The "Properties" navigation should lead to a dedicated properties browsing experience.
+
+Create:
+
+- Property search
+- Location filter
+- Property type filter
+- Price range
+- Bedrooms
+- Bathrooms
+- Sort by
+- Featured properties
+- Search results
+- Property detail pages
+
+The UI must remain visually consistent with the homepage.
+
+Property cards should be reusable components.
+
+==================================================
+10. PROPERTY DETAIL PAGE
+==================================================
+
+Create a complete property detail experience.
+
+Each property detail page should contain:
+
+- Large image gallery
+- Property title
+- Location
+- Price
+- Property type
+- Bedrooms
+- Bathrooms
+- Square footage
+- Description
+- Key features
+- Amenities
+- Agent information
+- Contact agent CTA
+- Schedule a viewing CTA
+- Favorite/save button
+- Similar properties
+
+Image gallery:
+- Large hero image
+- Thumbnail navigation
+- Fullscreen image viewer
+- Smooth transitions
+
+Add a floating/sticky contact CTA on mobile where appropriate.
+
+==================================================
+11. CALL TO ACTION SECTION
+==================================================
+
+At the bottom of the homepage create a CTA section inspired by the reference.
+
+Use a very light blue/gray background.
+
+Include a circular architectural/key icon on the left.
+
+Headline:
+
+"Ready to Find Your Perfect Property?"
+
+Supporting text:
+
+"Let our experts guide you to the right home or investment."
+
+Right side:
+Premium dark blue button:
+
+"Get in Touch →"
+
+Keep this section elegant, compact and spacious.
+
+==================================================
+12. FOOTER
+==================================================
+
+Create a premium footer.
+
+Include:
+
+HORIZON PROPERTIES
+
+Short company description.
+
+Navigation:
+Home
+Properties
+About Us
+Services
+Team
+Contact
+
+Contact:
+Phone
+Email
+Office address
+
+Social media icons.
+
+Newsletter signup.
+
+Copyright.
+
+Keep footer visually restrained and premium.
+
+==================================================
+13. SERVICES SECTION
+==================================================
+
+Create a Services section that fits the visual language of the reference.
+
+Services:
+
+Luxury Home Sales
+Property Investment
+Property Marketing
+Real Estate Advisory
+Property Valuation
+Relocation Services
+
+Use minimal cards or editorial layouts.
+
+Do not create generic SaaS-style icon boxes.
+
+Use subtle architectural imagery and refined typography where appropriate.
+
+==================================================
+14. TEAM SECTION
+==================================================
+
+Create a premium real estate team section.
+
+Show 4 team members.
+
+Each card:
+- Professional portrait
+- Name
+- Role
+- Small social/contact links
+
+Example:
+
+Daniel Morgan
+Managing Director
+
+Olivia Carter
+Luxury Property Advisor
+
+James Wilson
+Investment Consultant
+
+Sophia Bennett
+Senior Property Specialist
+
+Use elegant hover interactions.
+
+==================================================
+15. RESPONSIVE DESIGN
+==================================================
+
+This is extremely important.
+
+The website must be genuinely responsive, not simply scaled down.
+
+Desktop:
+1440px+
+Use the full editorial composition.
+
+Laptop:
+1024–1439px
+Adjust spacing and typography naturally.
+
+Tablet:
+768–1023px
+Reorganize grids and carousel behavior.
+
+Mobile:
+320–767px
+
+On mobile:
+- Simplified navigation
+- Hamburger menu
+- Hero typography scales correctly
+- Hero image remains visually powerful
+- About section becomes vertical
+- Property carousel becomes swipeable
+- CTA buttons remain easy to tap
+- No horizontal overflow
+- Images maintain correct aspect ratios
+- Cards become optimized for narrow screens
+- Typography remains premium and readable
+
+Pay special attention to:
+iPhone-sized screens.
+
+==================================================
+16. ANIMATIONS & MICRO INTERACTIONS
+==================================================
+
+Use premium, subtle motion.
+
+Examples:
+
+- Header transition on scroll
+- Fade-up section entrances
+- Image reveal animations
+- Image hover zoom
+- Button hover transitions
+- Carousel movement
+- Smooth scrolling
+- Mobile menu animation
+- Property gallery transitions
+
+Animation philosophy:
+
+"Luxury architecture website"
+
+NOT:
+
+"Animated startup landing page"
+
+Animations should feel expensive, calm and intentional.
+
+Avoid:
+- Excessive parallax
+- Bouncing elements
+- Huge spinning animations
+- Neon effects
+- Overuse of glassmorphism
+- Distracting cursor effects
+
+==================================================
+17. IMAGE DIRECTION
+==================================================
+
+Images are extremely important.
+
+Use consistent high-end architectural photography.
+
+Image characteristics:
+- Modern luxury homes
+- Large glass facades
+- Swimming pools
+- Sunset / golden hour
+- Blue-hour photography
+- Clean landscaping
+- Cinematic composition
+- Premium real estate photography
+- Realistic materials
+- Natural lighting
+
+Avoid:
+- Cheap-looking stock photography
+- Cartoon images
+- Obviously AI-generated-looking houses
+- Low-resolution images
+- Images with visible text or watermarks
+
+All images should have consistent visual quality.
+
+==================================================
+18. UI DETAILS
+==================================================
+
+Follow the reference closely regarding:
+
+- Border radius
+- Card proportions
+- Image cropping
+- Section spacing
+- Button dimensions
+- Navigation spacing
+- Typography hierarchy
+- Alignment
+- Whitespace
+- Visual rhythm
+
+The design should feel intentionally art-directed.
+
+Do not fill empty spaces unnecessarily.
+
+Whitespace is part of the design.
+
+==================================================
+19. ACCESSIBILITY
+==================================================
+
+Implement proper:
+
+- Semantic HTML
+- Keyboard navigation
+- Focus states
+- Alt text
+- Sufficient contrast
+- Accessible buttons
+- Accessible carousel controls
+- ARIA labels where needed
+
+Do not sacrifice accessibility for visual design.
+
+==================================================
+20. PERFORMANCE
+==================================================
+
+Optimize the website for performance.
+
+Important:
+
+- Lazy-load below-the-fold images
+- Use responsive image sizes
+- Avoid unnecessarily heavy libraries
+- Avoid excessive JavaScript
+- Keep animations GPU-friendly
+- Avoid huge background videos unless absolutely necessary
+- Optimize image loading
+- Prevent layout shift
+
+The website should feel fast despite the large architectural imagery.
+
+==================================================
+21. CODE QUALITY
+==================================================
+
+Build this as a real production-quality website, not a visual mockup.
+
+Requirements:
+
+- Clean component architecture
+- Reusable components
+- Reusable property card component
+- Reusable buttons
+- Reusable navigation
+- Reusable property gallery
+- Clean data structure for properties
+- Easy-to-edit content
+- No duplicated unnecessary code
+- Responsive CSS
+- Consistent spacing system
+- Consistent typography system
+- Consistent color variables
+
+Do not hardcode every individual section separately if reusable components make sense.
+
+==================================================
+22. INTERACTION / FUNCTIONALITY
+==================================================
+
+The following must actually work:
+
+- Navigation links
+- Mobile navigation
+- Property carousel
+- Property filtering
+- Property search
+- Property detail navigation
+- Image gallery
+- Favorite property button
+- Contact CTA
+- Schedule viewing CTA
+- Buttons
+- Smooth scrolling
+- Responsive behavior
+
+Do NOT create fake buttons that do nothing.
+
+If a backend/database is available in Base44, structure the property data so it can later be connected to a real database.
+
+==================================================
+23. HOMEPAGE STRUCTURE
+==================================================
+
+Final homepage order:
+
+1. Sticky Header
+2. Hero
+3. Who We Are
+4. Featured Properties
+5. Services
+6. Why Choose Horizon
+7. Team
+8. CTA
+9. Footer
+
+The visual hierarchy should remain close to the reference screenshot, with the hero, About section and Featured Properties being the strongest visual moments.
+
+==================================================
+24. IMPORTANT DESIGN RULE
+==================================================
+
+Do NOT blindly copy the screenshot pixel-by-pixel.
+
+Instead:
+
+Analyze the reference screenshots carefully and reproduce their:
+
+- Visual hierarchy
+- Layout logic
+- Spacing
+- Typography scale
+- Image composition
+- Card system
+- Navigation structure
+- Color system
+- Premium architectural aesthetic
+- Interaction patterns
+
+Then improve the UX and functionality while preserving the same design DNA.
+
+The final result should make someone who sees the reference screenshots immediately recognize the same design language.
+
+==================================================
+25. FINAL QUALITY BAR
+==================================================
+
+Before considering the implementation complete, inspect the entire website as a senior UI/UX designer and frontend engineer.
+
+Check:
+
+- Does it actually look like the attached reference?
+- Does the hero have the same visual impact?
+- Is the typography hierarchy correct?
+- Are the proportions correct?
+- Are the property cards visually consistent?
+- Is spacing premium?
+- Does mobile look intentionally designed?
+- Are animations subtle?
+- Are buttons functional?
+- Is there any horizontal overflow?
+- Are images high quality?
+- Are there any generic template-looking sections?
+- Are there any unnecessary UI elements?
+- Does anything look cheap, unfinished, or AI-generated?
+
+If something looks generic, redesign it.
+
+If something feels visually weaker than the reference, improve it.
+
+Do not stop at the first functional version.
+
+Build the polished final version directly in Base Code.
+
+IMPORTANT:
+Prioritize visual fidelity to the attached reference screenshots first, then improve functionality, responsiveness, accessibility and UX without changing the core visual identity.
