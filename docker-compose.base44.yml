@@ -1,0 +1,68 @@
+# Local development stack for the Horizon Properties website.
+# Runs everything from the cloned source with live reload — never from a prebuilt bundle.
+services:
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    restart: on-failure
+    volumes:
+      - ./:/app
+      - web_node_modules:/app/node_modules
+    environment:
+      # Passed through to the dev server; the platform sets BASE44_PREVIEW_MODE=1 in the sandbox.
+      - BASE44_PREVIEW_MODE
+      - BASE44_SANDBOX_HOST_DOMAIN
+      - BASE44_PUBLIC_HOST_SUFFIX
+      # Vite appends this to allowedHosts (v6.1+), so the proxied host is accepted.
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+      # Single-origin wiring: the browser only ever talks to port 3000, /api is proxied to the api service.
+      - API_PROXY_TARGET=http://api:8000
+    command:
+      - sh
+      - -ec
+      - npm install --no-audit --no-fund --loglevel=error && exec npx vite --host 0.0.0.0 --port 5173
+    ports:
+      - '3000:5173'
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'node -e "fetch(\"http://127.0.0.1:5173/\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"'
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+
+  api:
+    image: node:22-alpine
+    working_dir: /app/server
+    restart: on-failure
+    volumes:
+      - ./server:/app/server
+      - api_node_modules:/app/server/node_modules
+      - api_data:/app/data
+    environment:
+      - PORT=8000
+      - DATA_DIR=/app/data
+      - BASE44_PREVIEW_MODE
+    command:
+      - sh
+      - -ec
+      - npm install --no-audit --no-fund --loglevel=error && exec node index.js
+    ports:
+      - '8000:8000'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'node -e "fetch(\"http://127.0.0.1:8000/api/health\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"'
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  web_node_modules:
+  api_node_modules:
+  api_data:

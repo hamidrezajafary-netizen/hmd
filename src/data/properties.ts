@@ -1,0 +1,622 @@
+export type PropertyType = 'Villa' | 'Estate' | 'Residence' | 'House' | 'Penthouse';
+
+export type Property = {
+  id: string;
+  slug: string;
+  name: string;
+  city: string;
+  state: string;
+  country: string;
+  type: PropertyType;
+  status: 'New' | 'Exclusive' | 'For Sale';
+  price: number;
+  beds: number;
+  baths: number;
+  sqft: number;
+  lot: string;
+  year: number;
+  featured: boolean;
+  images: string[];
+  summary: string;
+  description: string;
+  features: string[];
+  amenities: string[];
+  agentId: string;
+};
+
+/**
+ * Listing data lives in one typed module. The shape mirrors a database row so this
+ * file can later be replaced by an API response without touching the components.
+ */
+export const properties: Property[] = [
+  {
+    id: 'HP-101',
+    slug: 'lakeside-modern-villa',
+    name: 'Lakeside Modern Villa',
+    city: 'Austin',
+    state: 'Texas',
+    country: 'United States',
+    type: 'Villa',
+    status: 'Exclusive',
+    price: 2_350_000,
+    beds: 5,
+    baths: 6,
+    sqft: 6200,
+    lot: '0.8 acres',
+    year: 2021,
+    featured: true,
+    images: [
+      '1670589953882-b94c9cb380f5',
+      '1600607687939-ce8a6c25118c',
+      '1600566753086-00f18fb6b3ea',
+      '1600121848594-d8644e57abab',
+    ],
+    summary: 'Cantilevered glass volumes opening onto a private lake terrace.',
+    description:
+      'Set behind a gated approach on the western shore of Lake Austin, this villa is arranged as a sequence of glass pavilions around a central courtyard. Full-height sliding walls dissolve the boundary between the living room, the terrace and the water beyond. A cantilevered primary suite occupies the upper level with uninterrupted lake views.',
+    features: [
+      'Cantilevered primary suite with lake outlook',
+      'Twenty-four foot sliding glass walls',
+      'Chef’s kitchen with custom oak joinery',
+      'Temperature-controlled cellar for 1,200 bottles',
+      'Heated infinity edge pool and spa',
+      'Four-car gallery garage',
+    ],
+    amenities: [
+      'Infinity pool',
+      'Private dock',
+      'Home cinema',
+      'Gym & sauna',
+      'Guest house',
+      'Smart home system',
+      'Solar array',
+      'Gated entry',
+    ],
+    agentId: 'daniel-morgan',
+  },
+  {
+    id: 'HP-102',
+    slug: 'pacific-glass-house',
+    name: 'Pacific Glass House',
+    city: 'Malibu',
+    state: 'California',
+    country: 'United States',
+    type: 'House',
+    status: 'For Sale',
+    price: 4_800_000,
+    beds: 6,
+    baths: 7,
+    sqft: 7400,
+    lot: '1.2 acres',
+    year: 2019,
+    featured: true,
+    images: [
+      '1777919541982-dcb34c146a2d',
+      '1616486338812-3dadae4b4ace',
+      '1600585152220-90363fe7e115',
+      '1600607686527-6fb886090705',
+    ],
+    summary: 'A glass pavilion above the Pacific, framed by travertine terraces.',
+    description:
+      'Perched on a bluff with one hundred feet of ocean frontage, the house is organised as three travertine-clad volumes connected by a glazed spine. Every principal room opens to the horizon, and the lower level steps down to a deck with an infinity pool that appears to spill into the sea.',
+    features: [
+      'One hundred feet of ocean frontage',
+      'Structural glass ocean façade',
+      'Travertine terraces and reflecting pools',
+      'Primary suite with dual dressing rooms',
+      'Outdoor kitchen and fire terrace',
+      'Staff quarters with separate entrance',
+    ],
+    amenities: [
+      'Infinity pool',
+      'Beach access',
+      'Wine room',
+      'Screening room',
+      'Yoga studio',
+      'Elevator',
+      'EV charging',
+      'Full house automation',
+    ],
+    agentId: 'olivia-carter',
+  },
+  {
+    id: 'HP-103',
+    slug: 'desert-horizon-estate',
+    name: 'Desert Horizon Estate',
+    city: 'Scottsdale',
+    state: 'Arizona',
+    country: 'United States',
+    type: 'Estate',
+    status: 'For Sale',
+    price: 3_150_000,
+    beds: 5,
+    baths: 5,
+    sqft: 5800,
+    lot: '2.4 acres',
+    year: 2020,
+    featured: false,
+    images: [
+      '1583608205776-bfd35f0d9f83',
+      '1600047509807-ba8f99d2cdde',
+      '1600566753190-17f0baa2a6c3',
+      '1502672260266-1c1ef2d93688',
+    ],
+    summary: 'Low-slung desert modernism with mountain views on every side.',
+    description:
+      'A single-storey composition in board-formed concrete and weathered steel, oriented to capture the McDowell range. Deep overhangs shade the interiors through the afternoon, while the rammed-earth garden courts hold cooler air from sunrise to dusk.',
+    features: [
+      'Board-formed concrete and weathered steel',
+      'Deep overhangs for passive cooling',
+      'Two rammed-earth garden courts',
+      'Casita with independent terrace',
+      'Resort pool with swim-up shelf',
+      'Five-car motor court',
+    ],
+    amenities: [
+      'Pool & spa',
+      'Casita',
+      'Outdoor kitchen',
+      'Fire pit terrace',
+      'Desert garden',
+      'Home office suite',
+      'Solar array',
+      'Security system',
+    ],
+    agentId: 'james-wilson',
+  },
+  {
+    id: 'HP-104',
+    slug: 'oceanfront-residence',
+    name: 'Oceanfront Residence',
+    city: 'Miami',
+    state: 'Florida',
+    country: 'United States',
+    type: 'Residence',
+    status: 'Exclusive',
+    price: 5_200_000,
+    beds: 4,
+    baths: 5,
+    sqft: 4600,
+    lot: '0.4 acres',
+    year: 2022,
+    featured: true,
+    images: [
+      '1706808849780-7a04fbac83ef',
+      '1600210492486-724fe5c67fb0',
+      '1493809842364-78817add7ffb',
+      '1600607687920-4e2a09cf159d',
+    ],
+    summary: 'Direct ocean frontage with a cantilevered sunrise terrace.',
+    description:
+      'A full-floor residence with seventy feet of direct ocean frontage, reached by private lift. Interiors are calm and materially restrained — limestone, walnut and bronze — so that the water remains the subject. The cantilevered terrace faces east for sunrise and the protected bay balcony catches the evening.',
+    features: [
+      'Seventy feet of direct ocean frontage',
+      'Private lift access and lobby',
+      'Cantilevered sunrise terrace',
+      'Limestone and walnut interiors',
+      'Summer kitchen on the bay balcony',
+      'Two deeded parking spaces plus valet',
+    ],
+    amenities: [
+      'Beach service',
+      'Infinity pool',
+      'Spa & fitness centre',
+      'Concierge',
+      'Wine storage',
+      'Marina berth option',
+      'Storm glazing',
+      'Smart climate control',
+    ],
+    agentId: 'olivia-carter',
+  },
+  {
+    id: 'HP-105',
+    slug: 'modern-hillside-retreat',
+    name: 'Modern Hillside Retreat',
+    city: 'Los Angeles',
+    state: 'California',
+    country: 'United States',
+    type: 'Villa',
+    status: 'For Sale',
+    price: 3_750_000,
+    beds: 5,
+    baths: 5,
+    sqft: 5100,
+    lot: '0.6 acres',
+    year: 2018,
+    featured: false,
+    images: [
+      '1568605114967-8130f3a36994',
+      '1600585154526-990dced4db0d',
+      '1600573472550-8090b5e0745e',
+      '1560448204-e02f11c3d0e2',
+    ],
+    summary: 'Stepped terraces above the canyon, built for indoor-outdoor living.',
+    description:
+      'The house descends the hillside in three stepped terraces, each with its own garden. Glass corners and a central spine of pale oak keep sight lines clean from the street to the canyon, and a rooftop deck above the guest wing takes in the city lights after dark.',
+    features: [
+      'Three stepped garden terraces',
+      'Glass corner living room',
+      'Rooftop deck with skyline outlook',
+      'Guest wing with private entrance',
+      'Infinity pool with canyon edge',
+      'Two-car garage with workshop',
+    ],
+    amenities: [
+      'Infinity pool',
+      'Outdoor dining terrace',
+      'Home gym',
+      'Guest wing',
+      'Fireplace lounge',
+      'Garden irrigation',
+      'Solar hot water',
+      'Gated motor court',
+    ],
+    agentId: 'sophia-bennett',
+  },
+  {
+    id: 'HP-106',
+    slug: 'palm-garden-residence',
+    name: 'Palm Garden Residence',
+    city: 'Beverly Hills',
+    state: 'California',
+    country: 'United States',
+    type: 'Estate',
+    status: 'Exclusive',
+    price: 6_400_000,
+    beds: 7,
+    baths: 8,
+    sqft: 9200,
+    lot: '1.9 acres',
+    year: 2017,
+    featured: true,
+    images: [
+      '1613977257363-707ba9348227',
+      '1600047509358-9dc75507daeb',
+      '1600566752355-35792bedcfea',
+      '1600585154084-4e5fe7c39198',
+    ],
+    summary: 'A symmetrical estate behind hedging, with formal gardens and a pool pavilion.',
+    description:
+      'Approached through mature palms and clipped hedging, the estate is classically symmetrical in plan but contemporary in finish. Principal rooms open onto a stone terrace, while the pool pavilion, screening room and staff apartment allow the house to work quietly at scale.',
+    features: [
+      'Symmetrical plan with stone terrace',
+      'Pool pavilion with catering kitchen',
+      'Library with oak panelling',
+      'Screening room for twelve',
+      'Staff apartment with separate entry',
+      'Motor court for eight cars',
+    ],
+    amenities: [
+      'Formal gardens',
+      'Pool pavilion',
+      'Screening room',
+      'Gym & treatment room',
+      'Wine cellar',
+      'Guest house',
+      'Elevator',
+      'Full-house automation',
+    ],
+    agentId: 'daniel-morgan',
+  },
+  {
+    id: 'HP-107',
+    slug: 'contemporary-lake-house',
+    name: 'Contemporary Lake House',
+    city: 'Lake Tahoe',
+    state: 'Nevada',
+    country: 'United States',
+    type: 'House',
+    status: 'For Sale',
+    price: 2_950_000,
+    beds: 4,
+    baths: 4,
+    sqft: 4300,
+    lot: '0.9 acres',
+    year: 2021,
+    featured: false,
+    images: [
+      '1523217582562-09d0def993a6',
+      '1618221195710-dd6b41faaea6',
+      '1600585154340-be6161a56a0c',
+      '1600607686527-6fb886090705',
+    ],
+    summary: 'Timber and glass on the water, with a private pier and boathouse.',
+    description:
+      'Cedar, blackened steel and glass form a compact lake house that opens entirely to the water. A double-sided fireplace anchors the main room, and the boathouse with private pier sits a short walk through the pines.',
+    features: [
+      'Full-height glass lake façade',
+      'Double-sided fireplace',
+      'Boathouse with private pier',
+      'Heated boot room and ski store',
+      'Bunk room sleeping six',
+      'Two-slip mooring',
+    ],
+    amenities: [
+      'Private pier',
+      'Boathouse',
+      'Lakeside sauna',
+      'Outdoor fire terrace',
+      'Ski store',
+      'Bunk room',
+      'Radiant heating',
+      'Generator backup',
+    ],
+    agentId: 'sophia-bennett',
+  },
+  {
+    id: 'HP-108',
+    slug: 'architectural-downtown-penthouse',
+    name: 'Architectural Downtown Penthouse',
+    city: 'Austin',
+    state: 'Texas',
+    country: 'United States',
+    type: 'Penthouse',
+    status: 'New',
+    price: 1_850_000,
+    beds: 3,
+    baths: 3,
+    sqft: 2900,
+    lot: '—',
+    year: 2023,
+    featured: false,
+    images: [
+      '1628012209120-d9db7abf7eab',
+      '1600607687939-ce8a6c25118c',
+      '1600047509807-ba8f99d2cdde',
+      '1616486338812-3dadae4b4ace',
+    ],
+    summary: 'A double-height penthouse above the river, with a wraparound terrace.',
+    description:
+      'Occupying the upper two levels of a concrete-framed tower, the penthouse is arranged around a double-height living hall and a wraparound terrace facing the river and the skyline. Interiors were completed by a local studio using pale terrazzo and blackened oak.',
+    features: [
+      'Double-height living hall',
+      'Wraparound terrace with river outlook',
+      'Custom terrazzo and blackened oak',
+      'Primary suite on its own level',
+      'Two parking spaces with lift access',
+      'Concierge and residents’ lounge',
+    ],
+    amenities: [
+      'Concierge',
+      'Skyline terrace',
+      'Fitness suite',
+      'Residents’ lounge',
+      'Storage suite',
+      'EV charging',
+      'Pet spa',
+      'Secure lobby',
+    ],
+    agentId: 'james-wilson',
+  },
+  {
+    id: 'HP-109',
+    slug: 'coastline-cliff-estate',
+    name: 'Coastline Cliff Estate',
+    city: 'Big Sur',
+    state: 'California',
+    country: 'United States',
+    type: 'Estate',
+    status: 'Exclusive',
+    price: 8_900_000,
+    beds: 6,
+    baths: 7,
+    sqft: 8100,
+    lot: '3.1 acres',
+    year: 2016,
+    featured: true,
+    images: [
+      '1600596542815-ffad4c1539a9',
+      '1600585154526-990dced4db0d',
+      '1600210492486-724fe5c67fb0',
+      '1502672260266-1c1ef2d93688',
+    ],
+    summary: 'Three acres above the Pacific, with a guest pavilion and private trail.',
+    description:
+      'Held by one family for two decades, the estate sits on three acres of coastal bluff with a private trail to a sheltered cove. The main house is paired with a two-bedroom guest pavilion and a studio building facing the headland.',
+    features: [
+      'Three acres of coastal bluff',
+      'Private trail to a sheltered cove',
+      'Two-bedroom guest pavilion',
+      'Studio building and workshop',
+      'Cypress and olive gardens',
+      'Rainwater harvesting system',
+    ],
+    amenities: [
+      'Ocean views',
+      'Guest pavilion',
+      'Studio',
+      'Greenhouse',
+      'Pool terrace',
+      'Fire circle',
+      'Backup power',
+      'Private trail',
+    ],
+    agentId: 'daniel-morgan',
+  },
+  {
+    id: 'HP-110',
+    slug: 'minimal-courtyard-villa',
+    name: 'Minimal Courtyard Villa',
+    city: 'Paradise Valley',
+    state: 'Arizona',
+    country: 'United States',
+    type: 'Villa',
+    status: 'For Sale',
+    price: 2_450_000,
+    beds: 4,
+    baths: 4,
+    sqft: 4100,
+    lot: '1.1 acres',
+    year: 2022,
+    featured: false,
+    images: [
+      '1580587771525-78b9dba3b914',
+      '1600566752355-35792bedcfea',
+      '1600121848594-d8644e57abab',
+      '1600573472550-8090b5e0745e',
+    ],
+    summary: 'A single-storey villa arranged around a planted central courtyard.',
+    description:
+      'Every room opens onto the central courtyard — planted with palo verde and gravel — which brings light into the middle of the plan. Materials are lime plaster, pale concrete and white oak, kept deliberately few.',
+    features: [
+      'Planted central courtyard',
+      'Lime plaster and white oak interiors',
+      'Pool positioned for afternoon shade',
+      'Guest casita with kitchenette',
+      'Shaded outdoor dining room',
+      'Detached studio for two cars',
+    ],
+    amenities: [
+      'Courtyard garden',
+      'Pool & spa',
+      'Casita',
+      'Outdoor dining',
+      'Studio/office',
+      'Water harvesting',
+      'Shade pergolas',
+      'Gated entry',
+    ],
+    agentId: 'james-wilson',
+  },
+  {
+    id: 'HP-111',
+    slug: 'skyline-glass-penthouse',
+    name: 'Skyline Glass Penthouse',
+    city: 'Miami',
+    state: 'Florida',
+    country: 'United States',
+    type: 'Penthouse',
+    status: 'New',
+    price: 3_600_000,
+    beds: 3,
+    baths: 4,
+    sqft: 3200,
+    lot: '—',
+    year: 2024,
+    featured: false,
+    images: [
+      '1512917774080-9991f1c4c750',
+      '1600607687920-4e2a09cf159d',
+      '1493809842364-78817add7ffb',
+      '1600585154084-4e5fe7c39198',
+    ],
+    summary: 'A corner penthouse with bay and city frontage on two sides.',
+    description:
+      'Corner glazing gives the penthouse two distinct outlooks: sunrise over the bay and sunset across the city. A restrained palette of stone, glass and linen keeps the emphasis on the view, with a private terrace off the primary suite.',
+    features: [
+      'Corner glazing on two elevations',
+      'Private terrace off the primary suite',
+      'Stone and linen interior palette',
+      'Summer kitchen on the main terrace',
+      'Dedicated lift lobby',
+      'Two parking spaces',
+    ],
+    amenities: [
+      'Bay & city views',
+      'Private terrace',
+      'Concierge',
+      'Pool deck',
+      'Spa & gym',
+      'Residents’ library',
+      'EV charging',
+      'Pet friendly',
+    ],
+    agentId: 'olivia-carter',
+  },
+  {
+    id: 'HP-112',
+    slug: 'heritage-garden-manor',
+    name: 'Heritage Garden Manor',
+    city: 'Greenwich',
+    state: 'Connecticut',
+    country: 'United States',
+    type: 'Estate',
+    status: 'For Sale',
+    price: 7_200_000,
+    beds: 8,
+    baths: 7,
+    sqft: 10_400,
+    lot: '4.6 acres',
+    year: 1928,
+    featured: false,
+    images: [
+      '1570129477492-45c003edd2be',
+      '1600047509358-9dc75507daeb',
+      '1560448204-e02f11c3d0e2',
+      '1618221195710-dd6b41faaea6',
+    ],
+    summary: 'A restored 1928 manor on four and a half acres of designed grounds.',
+    description:
+      'Substantially restored and quietly modernised, the manor retains its original proportions, panelling and fireplaces while gaining a garden room, catering kitchen and full services. The grounds include a walled kitchen garden, orchard and pool house.',
+    features: [
+      'Original 1928 panelling and fireplaces',
+      'New garden room and catering kitchen',
+      'Walled kitchen garden and orchard',
+      'Pool house with changing rooms',
+      'Staff wing and separate cottage',
+      'Four and a half acres of designed grounds',
+    ],
+    amenities: [
+      'Pool & pool house',
+      'Orchard & gardens',
+      'Library',
+      'Wine cellar',
+      'Staff wing',
+      'Cottage',
+      'Greenhouse',
+      'Full services upgrade',
+    ],
+    agentId: 'sophia-bennett',
+  },
+];
+
+export const propertyTypes: PropertyType[] = ['Villa', 'Estate', 'Residence', 'House', 'Penthouse'];
+
+export const states = Array.from(new Set(properties.map((p) => p.state))).sort();
+
+export const priceBands = [
+  { id: 'any', label: 'Any price', min: 0, max: Number.POSITIVE_INFINITY },
+  { id: 'under-2', label: 'Under $2M', min: 0, max: 2_000_000 },
+  { id: '2-4', label: '$2M – $4M', min: 2_000_000, max: 4_000_000 },
+  { id: '4-6', label: '$4M – $6M', min: 4_000_000, max: 6_000_000 },
+  { id: '6-plus', label: '$6M +', min: 6_000_000, max: Number.POSITIVE_INFINITY },
+];
+
+export const bedroomOptions = [
+  { id: 'any', label: 'Any bedrooms', min: 0 },
+  { id: '3', label: '3+ bedrooms', min: 3 },
+  { id: '4', label: '4+ bedrooms', min: 4 },
+  { id: '5', label: '5+ bedrooms', min: 5 },
+  { id: '6', label: '6+ bedrooms', min: 6 },
+];
+
+export const bathroomOptions = [
+  { id: 'any', label: 'Any bathrooms', min: 0 },
+  { id: '3', label: '3+ bathrooms', min: 3 },
+  { id: '5', label: '5+ bathrooms', min: 5 },
+  { id: '7', label: '7+ bathrooms', min: 7 },
+];
+
+export const sortOptions = [
+  { id: 'featured', label: 'Featured first' },
+  { id: 'price-desc', label: 'Price: high to low' },
+  { id: 'price-asc', label: 'Price: low to high' },
+  { id: 'size-desc', label: 'Largest first' },
+  { id: 'newest', label: 'Newest first' },
+];
+
+export function getProperty(slug: string): Property | undefined {
+  return properties.find((property) => property.slug === slug);
+}
+
+export function similarProperties(property: Property, limit = 3): Property[] {
+  return properties
+    .filter((item) => item.id !== property.id)
+    .sort((a, b) => {
+      const score = (item: Property) =>
+        (item.type === property.type ? 2 : 0) + (item.state === property.state ? 1 : 0);
+      return score(b) - score(a);
+    })
+    .slice(0, limit);
+}
