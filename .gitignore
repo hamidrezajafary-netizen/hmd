@@ -4,3 +4,6 @@ dist
 .env.local
 *.log
 .DS_Store
+
+# Downloadable snapshot of the project, served from the dev server (public/) — not a source file.
+public/bk-scroll-experience.zip
